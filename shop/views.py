@@ -1,8 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from shop.models import product
 
 def index(request):
-    return render(request, 'shop/indexshop.html')
+    products=product.objects.all()
+    n=len(products)
+    nslides=n//4+ceil(n/4-n//4)
+    params={'products':products, 'no_of_slides':nslides , 'range':range(1,nslides)}
+
+    return render(request, 'shop/indexshop.html',params)
 
 def about(request):
     return HttpResponse('about page')
